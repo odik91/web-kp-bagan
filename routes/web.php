@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::view('/admin', 'admin.dashboard');
+Route::view('/testlogin', 'auth.login_app');
+Route::view('/testregister', 'auth.register_app');
