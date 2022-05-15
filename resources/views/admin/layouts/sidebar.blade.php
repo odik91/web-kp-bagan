@@ -2,11 +2,30 @@
   <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
       <div class="nav">
-        <div class="sb-sidenav-menu-heading">Core</div>
-        <a class="nav-link" href="index.html">
+        <div class="sb-sidenav-menu-heading">Main Menu</div>
+        {{-- <a
+          class="nav-link collapsed @if(isset($title) && ($title == 'Dashboard')) {{ 'active' }} @else {{ '' }} @endif"
+          href="{{ route('home') }}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
           Dashboard
+        </a> --}}
+        <a class="nav-link" href="{{ route('home') }}">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+          Beranda
         </a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuLayouts" aria-expanded="false"
+          aria-controls="menuLayouts">
+          <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+          Item Menu
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="menuLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" href="layout-static.html">Daftar Menu</a>
+            <a class="nav-link" href="layout-sidenav-light.html">Tambah Menu</a>
+            <a class="nav-link" href="layout-sidenav-light.html">Tong Sampah Menu</a>
+          </nav>
+        </div>
         <div class="sb-sidenav-menu-heading">Interface</div>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
           aria-expanded="false" aria-controls="collapseLayouts">
@@ -68,8 +87,8 @@
       </div>
     </div>
     <div class="sb-sidenav-footer">
-      <div class="small">Logged in as:</div>
-      Start Bootstrap
+      <div class="small">Masuk sebagai:</div>
+      {{ ucwords(auth()->user()->name) }}
     </div>
   </nav>
 </div>

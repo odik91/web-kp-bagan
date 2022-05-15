@@ -18,10 +18,14 @@
       <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="#">Settings</a>
-        <a class="dropdown-item" href="#">Activity Log</a>
+        <a class="dropdown-item" href="#">Profil</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="login.html">Logout</a>
+        <div class="dropdown-item">
+          <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="btn btn-block btn-warning" type="submit">Keluar</button>
+          </form>
+        </div>
       </div>
     </li>
   </ul>
