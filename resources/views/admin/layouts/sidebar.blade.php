@@ -1,120 +1,75 @@
-<!--sidebar start-->
-<aside>
-  <div id="sidebar" class="nav-collapse ">
-    <!-- sidebar menu start-->
-    <ul class="sidebar-menu" id="nav-accordion">
-      <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p>
-      <h5 class="centered">Sam Soffes</h5>
-      <li class="mt">
-        <a class="active" href="index.html">
-          <i class="fa fa-dashboard"></i>
-          <span>Dashboard</span>
-          </a>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class="fa fa-desktop"></i>
-          <span>UI Elements</span>
-          </a>
-        <ul class="sub">
-          <li><a href="general.html">General</a></li>
-          <li><a href="buttons.html">Buttons</a></li>
-          <li><a href="panels.html">Panels</a></li>
-          <li><a href="font_awesome.html">Font Awesome</a></li>
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class="fa fa-cogs"></i>
-          <span>Components</span>
-          </a>
-        <ul class="sub">
-          <li><a href="grids.html">Grids</a></li>
-          <li><a href="calendar.html">Calendar</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="todo_list.html">Todo List</a></li>
-          <li><a href="dropzone.html">Dropzone File Upload</a></li>
-          <li><a href="inline_editor.html">Inline Editor</a></li>
-          <li><a href="file_upload.html">Multiple File Upload</a></li>
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class="fa fa-book"></i>
-          <span>Extra Pages</span>
-          </a>
-        <ul class="sub">
-          <li><a href="blank.html">Blank Page</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="lock_screen.html">Lock Screen</a></li>
-          <li><a href="profile.html">Profile</a></li>
-          <li><a href="invoice.html">Invoice</a></li>
-          <li><a href="pricing_table.html">Pricing Table</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="404.html">404 Error</a></li>
-          <li><a href="500.html">500 Error</a></li>
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class="fa fa-tasks"></i>
-          <span>Forms</span>
-          </a>
-        <ul class="sub">
-          <li><a href="form_component.html">Form Components</a></li>
-          <li><a href="advanced_form_components.html">Advanced Components</a></li>
-          <li><a href="form_validation.html">Form Validation</a></li>
-          <li><a href="contactform.html">Contact Form</a></li>
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class="fa fa-th"></i>
-          <span>Data Tables</span>
-          </a>
-        <ul class="sub">
-          <li><a href="basic_table.html">Basic Table</a></li>
-          <li><a href="responsive_table.html">Responsive Table</a></li>
-          <li><a href="advanced_table.html">Advanced Table</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="inbox.html">
-          <i class="fa fa-envelope"></i>
-          <span>Mail </span>
-          <span class="label label-theme pull-right mail-info">2</span>
-          </a>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class=" fa fa-bar-chart-o"></i>
-          <span>Charts</span>
-          </a>
-        <ul class="sub">
-          <li><a href="morris.html">Morris</a></li>
-          <li><a href="chartjs.html">Chartjs</a></li>
-          <li><a href="flot_chart.html">Flot Charts</a></li>
-          <li><a href="xchart.html">xChart</a></li>
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a href="javascript:;">
-          <i class="fa fa-comments-o"></i>
-          <span>Chat Room</span>
-          </a>
-        <ul class="sub">
-          <li><a href="lobby.html">Lobby</a></li>
-          <li><a href="chat_room.html"> Chat Room</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="google_maps.html">
-          <i class="fa fa-map-marker"></i>
-          <span>Google Maps </span>
-          </a>
-      </li>
-    </ul>
-    <!-- sidebar menu end-->
-  </div>
-</aside>
-<!--sidebar end-->
+<div id="layoutSidenav_nav">
+  <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+      <div class="nav">
+        <div class="sb-sidenav-menu-heading">Core</div>
+        <a class="nav-link" href="index.html">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+          Dashboard
+        </a>
+        <div class="sb-sidenav-menu-heading">Interface</div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
+          aria-expanded="false" aria-controls="collapseLayouts">
+          <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+          Layouts
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" href="layout-static.html">Static Navigation</a>
+            <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+          </nav>
+        </div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false"
+          aria-controls="collapsePages">
+          <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+          Pages
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth"
+              aria-expanded="false" aria-controls="pagesCollapseAuth">
+              Authentication
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+              data-parent="#sidenavAccordionPages">
+              <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" href="login.html">Login</a>
+                <a class="nav-link" href="register.html">Register</a>
+                <a class="nav-link" href="password.html">Forgot Password</a>
+              </nav>
+            </div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError"
+              aria-expanded="false" aria-controls="pagesCollapseError">
+              Error
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
+              data-parent="#sidenavAccordionPages">
+              <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" href="401.html">401 Page</a>
+                <a class="nav-link" href="404.html">404 Page</a>
+                <a class="nav-link" href="500.html">500 Page</a>
+              </nav>
+            </div>
+          </nav>
+        </div>
+        <div class="sb-sidenav-menu-heading">Addons</div>
+        <a class="nav-link" href="charts.html">
+          <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+          Charts
+        </a>
+        <a class="nav-link" href="tables.html">
+          <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+          Tables
+        </a>
+      </div>
+    </div>
+    <div class="sb-sidenav-footer">
+      <div class="small">Logged in as:</div>
+      Start Bootstrap
+    </div>
+  </nav>
+</div>

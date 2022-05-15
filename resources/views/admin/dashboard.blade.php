@@ -1,431 +1,557 @@
 @extends('admin.layouts.master')
 @section('content')
-<!--main content start-->
-<section id="main-content">
-  <section class="wrapper">
-    <div class="row">
-      <div class="col-lg-9 main-chart">
-        <!--CUSTOM CHART START -->
-        <div class="border-head">
-          <h3>USER VISITS</h3>
+<div class="container-fluid">
+  <h1 class="mt-4">Dashboard</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
+  <div class="row">
+    <div class="col-xl-3 col-md-6">
+      <div class="card bg-primary text-white mb-4">
+        <div class="card-body">Primary Card</div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+          <a class="small text-white stretched-link" href="#">View Details</a>
+          <div class="small text-white"><i class="fas fa-angle-right"></i></div>
         </div>
-        <div class="custom-bar-chart">
-          <ul class="y-axis">
-            <li><span>10.000</span></li>
-            <li><span>8.000</span></li>
-            <li><span>6.000</span></li>
-            <li><span>4.000</span></li>
-            <li><span>2.000</span></li>
-            <li><span>0</span></li>
-          </ul>
-          <div class="bar">
-            <div class="title">JAN</div>
-            <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
-          </div>
-          <div class="bar ">
-            <div class="title">FEB</div>
-            <div class="value tooltips" data-original-title="5.000" data-toggle="tooltip" data-placement="top">50%</div>
-          </div>
-          <div class="bar ">
-            <div class="title">MAR</div>
-            <div class="value tooltips" data-original-title="6.000" data-toggle="tooltip" data-placement="top">60%</div>
-          </div>
-          <div class="bar ">
-            <div class="title">APR</div>
-            <div class="value tooltips" data-original-title="4.500" data-toggle="tooltip" data-placement="top">45%</div>
-          </div>
-          <div class="bar">
-            <div class="title">MAY</div>
-            <div class="value tooltips" data-original-title="3.200" data-toggle="tooltip" data-placement="top">32%</div>
-          </div>
-          <div class="bar ">
-            <div class="title">JUN</div>
-            <div class="value tooltips" data-original-title="6.200" data-toggle="tooltip" data-placement="top">62%</div>
-          </div>
-          <div class="bar">
-            <div class="title">JUL</div>
-            <div class="value tooltips" data-original-title="7.500" data-toggle="tooltip" data-placement="top">75%</div>
-          </div>
-        </div>
-        <!--custom chart end-->
-        <div class="row mt">
-          <!-- SERVER STATUS PANELS -->
-          <div class="col-md-4 col-sm-4 mb">
-            <div class="grey-panel pn donut-chart">
-              <div class="grey-header">
-                <h5>SERVER LOAD</h5>
-              </div>
-              <canvas id="serverstatus01" height="120" width="120"></canvas>
-              <script>
-                var doughnutData = [{
-                    value: 70,
-                    color: "#FF6B6B"
-                  },
-                  {
-                    value: 30,
-                    color: "#fdfdfd"
-                  }
-                ];
-                var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
-              </script>
-              <div class="row">
-                <div class="col-sm-6 col-xs-6 goleft">
-                  <p>Usage<br/>Increase:</p>
-                </div>
-                <div class="col-sm-6 col-xs-6">
-                  <h2>21%</h2>
-                </div>
-              </div>
-            </div>
-            <!-- /grey-panel -->
-          </div>
-          <!-- /col-md-4-->
-          <div class="col-md-4 col-sm-4 mb">
-            <div class="darkblue-panel pn">
-              <div class="darkblue-header">
-                <h5>DROPBOX STATICS</h5>
-              </div>
-              <canvas id="serverstatus02" height="120" width="120"></canvas>
-              <script>
-                var doughnutData = [{
-                    value: 60,
-                    color: "#1c9ca7"
-                  },
-                  {
-                    value: 40,
-                    color: "#f68275"
-                  }
-                ];
-                var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
-              </script>
-              <p>April 17, 2014</p>
-              <footer>
-                <div class="pull-left">
-                  <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
-                </div>
-                <div class="pull-right">
-                  <h5>60% Used</h5>
-                </div>
-              </footer>
-            </div>
-            <!--  /darkblue panel -->
-          </div>
-          <!-- /col-md-4 -->
-          <div class="col-md-4 col-sm-4 mb">
-            <!-- REVENUE PANEL -->
-            <div class="green-panel pn">
-              <div class="green-header">
-                <h5>REVENUE</h5>
-              </div>
-              <div class="chart mt">
-                <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
-              </div>
-              <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
-            </div>
-          </div>
-          <!-- /col-md-4 -->
-        </div>
-        <!-- /row -->
-        <div class="row">
-          <!-- WEATHER PANEL -->
-          <div class="col-md-4 mb">
-            <div class="weather pn">
-              <i class="fa fa-cloud fa-4x"></i>
-              <h2>11º C</h2>
-              <h4>BUDAPEST</h4>
-            </div>
-          </div>
-          <!-- /col-md-4-->
-          <!-- DIRECT MESSAGE PANEL -->
-          <div class="col-md-8 mb">
-            <div class="message-p pn">
-              <div class="message-header">
-                <h5>DIRECT MESSAGE</h5>
-              </div>
-              <div class="row">
-                <div class="col-md-3 centered hidden-sm hidden-xs">
-                  <img src="img/ui-danro.jpg" class="img-circle" width="65">
-                </div>
-                <div class="col-md-9">
-                  <p>
-                    <name>Dan Rogers</name>
-                    sent you a message.
-                  </p>
-                  <p class="small">3 hours ago</p>
-                  <p class="message">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                  <form class="form-inline" role="form">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="exampleInputText" placeholder="Reply Dan">
-                    </div>
-                    <button type="submit" class="btn btn-default">Send</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <!-- /Message Panel-->
-          </div>
-          <!-- /col-md-8  -->
-        </div>
-        <div class="row">
-          <!-- TWITTER PANEL -->
-          <div class="col-md-4 mb">
-            <div class="twitter-panel pn">
-              <i class="fa fa-twitter fa-4x"></i>
-              <p>Dashio is here! Take a look and enjoy this new Bootstrap Dashboard theme.</p>
-              <p class="user">@Alvrz_is</p>
-            </div>
-          </div>
-          <!-- /col-md-4 -->
-          <div class="col-md-4 mb">
-            <!-- WHITE PANEL - TOP USER -->
-            <div class="white-panel pn">
-              <div class="white-header">
-                <h5>TOP USER</h5>
-              </div>
-              <p><img src="img/ui-zac.jpg" class="img-circle" width="50"></p>
-              <p><b>Zac Snider</b></p>
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="small mt">MEMBER SINCE</p>
-                  <p>2012</p>
-                </div>
-                <div class="col-md-6">
-                  <p class="small mt">TOTAL SPEND</p>
-                  <p>$ 47,60</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /col-md-4 -->
-          <div class="col-md-4 mb">
-            <!-- INSTAGRAM PANEL -->
-            <div class="instagram-panel pn">
-              <i class="fa fa-instagram fa-4x"></i>
-              <p>@THISISYOU<br/> 5 min. ago
-              </p>
-              <p><i class="fa fa-comment"></i> 18 | <i class="fa fa-heart"></i> 49</p>
-            </div>
-          </div>
-          <!-- /col-md-4 -->
-        </div>
-        <!-- /row -->
-        <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-4 mb">
-            <div class="product-panel-2 pn">
-              <div class="badge badge-hot">HOT</div>
-              <img src="img/product.jpg" width="200" alt="">
-              <h5 class="mt">Flat Pack Heritage</h5>
-              <h6>TOTAL SALES: 1388</h6>
-              <button class="btn btn-small btn-theme04">FULL REPORT</button>
-            </div>
-          </div>
-          <!-- /col-md-4 -->
-          <!--  PROFILE 02 PANEL -->
-          <div class="col-lg-4 col-md-4 col-sm-4 mb">
-            <div class="content-panel pn">
-              <div id="profile-02">
-                <div class="user">
-                  <img src="img/friends/fr-06.jpg" class="img-circle" width="80">
-                  <h4>DJ SHERMAN</h4>
-                </div>
-              </div>
-              <div class="pr2-social centered">
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-dribbble"></i></a>
-              </div>
-            </div>
-            <!-- /panel -->
-          </div>
-          <!--/ col-md-4 -->
-          <div class="col-md-4 col-sm-4 mb">
-            <div class="green-panel pn">
-              <div class="green-header">
-                <h5>DISK SPACE</h5>
-              </div>
-              <canvas id="serverstatus03" height="120" width="120"></canvas>
-              <script>
-                var doughnutData = [{
-                    value: 60,
-                    color: "#2b2b2b"
-                  },
-                  {
-                    value: 40,
-                    color: "#fffffd"
-                  }
-                ];
-                var myDoughnut = new Chart(document.getElementById("serverstatus03").getContext("2d")).Doughnut(doughnutData);
-              </script>
-              <h3>60% USED</h3>
-            </div>
-          </div>
-          <!-- /col-md-4 -->
-        </div>
-        <!-- /row -->
       </div>
-      <!-- /col-lg-9 END SECTION MIDDLE -->
-      <!-- **********************************************************************************************************************************************************
-          RIGHT SIDEBAR CONTENT
-          *********************************************************************************************************************************************************** -->
-      <div class="col-lg-3 ds">
-        <!--COMPLETED ACTIONS DONUTS CHART-->
-        <div class="donut-main">
-          <h4>COMPLETED ACTIONS & PROGRESS</h4>
-          <canvas id="newchart" height="130" width="130"></canvas>
-          <script>
-            var doughnutData = [{
-                value: 70,
-                color: "#4ECDC4"
-              },
-              {
-                value: 30,
-                color: "#fdfdfd"
-              }
-            ];
-            var myDoughnut = new Chart(document.getElementById("newchart").getContext("2d")).Doughnut(doughnutData);
-          </script>
-        </div>
-        <!--NEW EARNING STATS -->
-        <div class="panel terques-chart">
-          <div class="panel-body">
-            <div class="chart">
-              <div class="centered">
-                <span>TODAY EARNINGS</span>
-                <strong>$ 890,00 | 15%</strong>
-              </div>
-              <br>
-              <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,564,455]"></div>
-            </div>
-          </div>
-        </div>
-        <!--new earning end-->
-        <!-- RECENT ACTIVITIES SECTION -->
-        <h4 class="centered mt">RECENT ACTIVITY</h4>
-        <!-- First Activity -->
-        <div class="desc">
-          <div class="thumb">
-            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-          </div>
-          <div class="details">
-            <p>
-              <muted>Just Now</muted>
-              <br/>
-              <a href="#">Paul Rudd</a> purchased an item.<br/>
-            </p>
-          </div>
-        </div>
-        <!-- Second Activity -->
-        <div class="desc">
-          <div class="thumb">
-            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-          </div>
-          <div class="details">
-            <p>
-              <muted>2 Minutes Ago</muted>
-              <br/>
-              <a href="#">James Brown</a> subscribed to your newsletter.<br/>
-            </p>
-          </div>
-        </div>
-        <!-- Third Activity -->
-        <div class="desc">
-          <div class="thumb">
-            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-          </div>
-          <div class="details">
-            <p>
-              <muted>3 Hours Ago</muted>
-              <br/>
-              <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
-            </p>
-          </div>
-        </div>
-        <!-- Fourth Activity -->
-        <div class="desc">
-          <div class="thumb">
-            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-          </div>
-          <div class="details">
-            <p>
-              <muted>7 Hours Ago</muted>
-              <br/>
-              <a href="#">Brando Page</a> purchased a year subscription.<br/>
-            </p>
-          </div>
-        </div>
-        <!-- USERS ONLINE SECTION -->
-        <h4 class="centered mt">TEAM MEMBERS ONLINE</h4>
-        <!-- First Member -->
-        <div class="desc">
-          <div class="thumb">
-            <img class="img-circle" src="img/ui-divya.jpg" width="35px" height="35px" align="">
-          </div>
-          <div class="details">
-            <p>
-              <a href="#">DIVYA MANIAN</a><br/>
-              <muted>Available</muted>
-            </p>
-          </div>
-        </div>
-        <!-- Second Member -->
-        <div class="desc">
-          <div class="thumb">
-            <img class="img-circle" src="img/ui-sherman.jpg" width="35px" height="35px" align="">
-          </div>
-          <div class="details">
-            <p>
-              <a href="#">DJ SHERMAN</a><br/>
-              <muted>I am Busy</muted>
-            </p>
-          </div>
-        </div>
-        <!-- Third Member -->
-        <div class="desc">
-          <div class="thumb">
-            <img class="img-circle" src="img/ui-danro.jpg" width="35px" height="35px" align="">
-          </div>
-          <div class="details">
-            <p>
-              <a href="#">DAN ROGERS</a><br/>
-              <muted>Available</muted>
-            </p>
-          </div>
-        </div>
-        <!-- Fourth Member -->
-        <div class="desc">
-          <div class="thumb">
-            <img class="img-circle" src="img/ui-zac.jpg" width="35px" height="35px" align="">
-          </div>
-          <div class="details">
-            <p>
-              <a href="#">Zac Sniders</a><br/>
-              <muted>Available</muted>
-            </p>
-          </div>
-        </div>
-        <!-- CALENDAR-->
-        <div id="calendar" class="mb">
-          <div class="panel green-panel no-margin">
-            <div class="panel-body">
-              <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
-                <div class="arrow"></div>
-                <h3 class="popover-title" style="disadding: none;"></h3>
-                <div id="date-popover-content" class="popover-content"></div>
-              </div>
-              <div id="my-calendar"></div>
-            </div>
-          </div>
-        </div>
-        <!-- / calendar -->
-      </div>
-      <!-- /col-lg-3 -->
     </div>
-    <!-- /row -->
-  </section>
-</section>
-<!--main content end-->
-            // table relation
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            // table relation
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+    <div class="col-xl-3 col-md-6">
+      <div class="card bg-warning text-white mb-4">
+        <div class="card-body">Warning Card</div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+          <a class="small text-white stretched-link" href="#">View Details</a>
+          <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+      <div class="card bg-success text-white mb-4">
+        <div class="card-body">Success Card</div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+          <a class="small text-white stretched-link" href="#">View Details</a>
+          <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+      <div class="card bg-danger text-white mb-4">
+        <div class="card-body">Danger Card</div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+          <a class="small text-white stretched-link" href="#">View Details</a>
+          <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fas fa-chart-area mr-1"></i>
+          Area Chart Example
+        </div>
+        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fas fa-chart-bar mr-1"></i>
+          Bar Chart Example
+        </div>
+        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="fas fa-table mr-1"></i>
+      DataTable Example
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Office</th>
+              <th>Age</th>
+              <th>Start date</th>
+              <th>Salary</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Office</th>
+              <th>Age</th>
+              <th>Start date</th>
+              <th>Salary</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <td>Tiger Nixon</td>
+              <td>System Architect</td>
+              <td>Edinburgh</td>
+              <td>61</td>
+              <td>2011/04/25</td>
+              <td>$320,800</td>
+            </tr>
+            <tr>
+              <td>Garrett Winters</td>
+              <td>Accountant</td>
+              <td>Tokyo</td>
+              <td>63</td>
+              <td>2011/07/25</td>
+              <td>$170,750</td>
+            </tr>
+            <tr>
+              <td>Ashton Cox</td>
+              <td>Junior Technical Author</td>
+              <td>San Francisco</td>
+              <td>66</td>
+              <td>2009/01/12</td>
+              <td>$86,000</td>
+            </tr>
+            <tr>
+              <td>Cedric Kelly</td>
+              <td>Senior Javascript Developer</td>
+              <td>Edinburgh</td>
+              <td>22</td>
+              <td>2012/03/29</td>
+              <td>$433,060</td>
+            </tr>
+            <tr>
+              <td>Airi Satou</td>
+              <td>Accountant</td>
+              <td>Tokyo</td>
+              <td>33</td>
+              <td>2008/11/28</td>
+              <td>$162,700</td>
+            </tr>
+            <tr>
+              <td>Brielle Williamson</td>
+              <td>Integration Specialist</td>
+              <td>New York</td>
+              <td>61</td>
+              <td>2012/12/02</td>
+              <td>$372,000</td>
+            </tr>
+            <tr>
+              <td>Herrod Chandler</td>
+              <td>Sales Assistant</td>
+              <td>San Francisco</td>
+              <td>59</td>
+              <td>2012/08/06</td>
+              <td>$137,500</td>
+            </tr>
+            <tr>
+              <td>Rhona Davidson</td>
+              <td>Integration Specialist</td>
+              <td>Tokyo</td>
+              <td>55</td>
+              <td>2010/10/14</td>
+              <td>$327,900</td>
+            </tr>
+            <tr>
+              <td>Colleen Hurst</td>
+              <td>Javascript Developer</td>
+              <td>San Francisco</td>
+              <td>39</td>
+              <td>2009/09/15</td>
+              <td>$205,500</td>
+            </tr>
+            <tr>
+              <td>Sonya Frost</td>
+              <td>Software Engineer</td>
+              <td>Edinburgh</td>
+              <td>23</td>
+              <td>2008/12/13</td>
+              <td>$103,600</td>
+            </tr>
+            <tr>
+              <td>Jena Gaines</td>
+              <td>Office Manager</td>
+              <td>London</td>
+              <td>30</td>
+              <td>2008/12/19</td>
+              <td>$90,560</td>
+            </tr>
+            <tr>
+              <td>Quinn Flynn</td>
+              <td>Support Lead</td>
+              <td>Edinburgh</td>
+              <td>22</td>
+              <td>2013/03/03</td>
+              <td>$342,000</td>
+            </tr>
+            <tr>
+              <td>Charde Marshall</td>
+              <td>Regional Director</td>
+              <td>San Francisco</td>
+              <td>36</td>
+              <td>2008/10/16</td>
+              <td>$470,600</td>
+            </tr>
+            <tr>
+              <td>Haley Kennedy</td>
+              <td>Senior Marketing Designer</td>
+              <td>London</td>
+              <td>43</td>
+              <td>2012/12/18</td>
+              <td>$313,500</td>
+            </tr>
+            <tr>
+              <td>Tatyana Fitzpatrick</td>
+              <td>Regional Director</td>
+              <td>London</td>
+              <td>19</td>
+              <td>2010/03/17</td>
+              <td>$385,750</td>
+            </tr>
+            <tr>
+              <td>Michael Silva</td>
+              <td>Marketing Designer</td>
+              <td>London</td>
+              <td>66</td>
+              <td>2012/11/27</td>
+              <td>$198,500</td>
+            </tr>
+            <tr>
+              <td>Paul Byrd</td>
+              <td>Chief Financial Officer (CFO)</td>
+              <td>New York</td>
+              <td>64</td>
+              <td>2010/06/09</td>
+              <td>$725,000</td>
+            </tr>
+            <tr>
+              <td>Gloria Little</td>
+              <td>Systems Administrator</td>
+              <td>New York</td>
+              <td>59</td>
+              <td>2009/04/10</td>
+              <td>$237,500</td>
+            </tr>
+            <tr>
+              <td>Bradley Greer</td>
+              <td>Software Engineer</td>
+              <td>London</td>
+              <td>41</td>
+              <td>2012/10/13</td>
+              <td>$132,000</td>
+            </tr>
+            <tr>
+              <td>Dai Rios</td>
+              <td>Personnel Lead</td>
+              <td>Edinburgh</td>
+              <td>35</td>
+              <td>2012/09/26</td>
+              <td>$217,500</td>
+            </tr>
+            <tr>
+              <td>Jenette Caldwell</td>
+              <td>Development Lead</td>
+              <td>New York</td>
+              <td>30</td>
+              <td>2011/09/03</td>
+              <td>$345,000</td>
+            </tr>
+            <tr>
+              <td>Yuri Berry</td>
+              <td>Chief Marketing Officer (CMO)</td>
+              <td>New York</td>
+              <td>40</td>
+              <td>2009/06/25</td>
+              <td>$675,000</td>
+            </tr>
+            <tr>
+              <td>Caesar Vance</td>
+              <td>Pre-Sales Support</td>
+              <td>New York</td>
+              <td>21</td>
+              <td>2011/12/12</td>
+              <td>$106,450</td>
+            </tr>
+            <tr>
+              <td>Doris Wilder</td>
+              <td>Sales Assistant</td>
+              <td>Sidney</td>
+              <td>23</td>
+              <td>2010/09/20</td>
+              <td>$85,600</td>
+            </tr>
+            <tr>
+              <td>Angelica Ramos</td>
+              <td>Chief Executive Officer (CEO)</td>
+              <td>London</td>
+              <td>47</td>
+              <td>2009/10/09</td>
+              <td>$1,200,000</td>
+            </tr>
+            <tr>
+              <td>Gavin Joyce</td>
+              <td>Developer</td>
+              <td>Edinburgh</td>
+              <td>42</td>
+              <td>2010/12/22</td>
+              <td>$92,575</td>
+            </tr>
+            <tr>
+              <td>Jennifer Chang</td>
+              <td>Regional Director</td>
+              <td>Singapore</td>
+              <td>28</td>
+              <td>2010/11/14</td>
+              <td>$357,650</td>
+            </tr>
+            <tr>
+              <td>Brenden Wagner</td>
+              <td>Software Engineer</td>
+              <td>San Francisco</td>
+              <td>28</td>
+              <td>2011/06/07</td>
+              <td>$206,850</td>
+            </tr>
+            <tr>
+              <td>Fiona Green</td>
+              <td>Chief Operating Officer (COO)</td>
+              <td>San Francisco</td>
+              <td>48</td>
+              <td>2010/03/11</td>
+              <td>$850,000</td>
+            </tr>
+            <tr>
+              <td>Shou Itou</td>
+              <td>Regional Marketing</td>
+              <td>Tokyo</td>
+              <td>20</td>
+              <td>2011/08/14</td>
+              <td>$163,000</td>
+            </tr>
+            <tr>
+              <td>Michelle House</td>
+              <td>Integration Specialist</td>
+              <td>Sidney</td>
+              <td>37</td>
+              <td>2011/06/02</td>
+              <td>$95,400</td>
+            </tr>
+            <tr>
+              <td>Suki Burks</td>
+              <td>Developer</td>
+              <td>London</td>
+              <td>53</td>
+              <td>2009/10/22</td>
+              <td>$114,500</td>
+            </tr>
+            <tr>
+              <td>Prescott Bartlett</td>
+              <td>Technical Author</td>
+              <td>London</td>
+              <td>27</td>
+              <td>2011/05/07</td>
+              <td>$145,000</td>
+            </tr>
+            <tr>
+              <td>Gavin Cortez</td>
+              <td>Team Leader</td>
+              <td>San Francisco</td>
+              <td>22</td>
+              <td>2008/10/26</td>
+              <td>$235,500</td>
+            </tr>
+            <tr>
+              <td>Martena Mccray</td>
+              <td>Post-Sales support</td>
+              <td>Edinburgh</td>
+              <td>46</td>
+              <td>2011/03/09</td>
+              <td>$324,050</td>
+            </tr>
+            <tr>
+              <td>Unity Butler</td>
+              <td>Marketing Designer</td>
+              <td>San Francisco</td>
+              <td>47</td>
+              <td>2009/12/09</td>
+              <td>$85,675</td>
+            </tr>
+            <tr>
+              <td>Howard Hatfield</td>
+              <td>Office Manager</td>
+              <td>San Francisco</td>
+              <td>51</td>
+              <td>2008/12/16</td>
+              <td>$164,500</td>
+            </tr>
+            <tr>
+              <td>Hope Fuentes</td>
+              <td>Secretary</td>
+              <td>San Francisco</td>
+              <td>41</td>
+              <td>2010/02/12</td>
+              <td>$109,850</td>
+            </tr>
+            <tr>
+              <td>Vivian Harrell</td>
+              <td>Financial Controller</td>
+              <td>San Francisco</td>
+              <td>62</td>
+              <td>2009/02/14</td>
+              <td>$452,500</td>
+            </tr>
+            <tr>
+              <td>Timothy Mooney</td>
+              <td>Office Manager</td>
+              <td>London</td>
+              <td>37</td>
+              <td>2008/12/11</td>
+              <td>$136,200</td>
+            </tr>
+            <tr>
+              <td>Jackson Bradshaw</td>
+              <td>Director</td>
+              <td>New York</td>
+              <td>65</td>
+              <td>2008/09/26</td>
+              <td>$645,750</td>
+            </tr>
+            <tr>
+              <td>Olivia Liang</td>
+              <td>Support Engineer</td>
+              <td>Singapore</td>
+              <td>64</td>
+              <td>2011/02/03</td>
+              <td>$234,500</td>
+            </tr>
+            <tr>
+              <td>Bruno Nash</td>
+              <td>Software Engineer</td>
+              <td>London</td>
+              <td>38</td>
+              <td>2011/05/03</td>
+              <td>$163,500</td>
+            </tr>
+            <tr>
+              <td>Sakura Yamamoto</td>
+              <td>Support Engineer</td>
+              <td>Tokyo</td>
+              <td>37</td>
+              <td>2009/08/19</td>
+              <td>$139,575</td>
+            </tr>
+            <tr>
+              <td>Thor Walton</td>
+              <td>Developer</td>
+              <td>New York</td>
+              <td>61</td>
+              <td>2013/08/11</td>
+              <td>$98,540</td>
+            </tr>
+            <tr>
+              <td>Finn Camacho</td>
+              <td>Support Engineer</td>
+              <td>San Francisco</td>
+              <td>47</td>
+              <td>2009/07/07</td>
+              <td>$87,500</td>
+            </tr>
+            <tr>
+              <td>Serge Baldwin</td>
+              <td>Data Coordinator</td>
+              <td>Singapore</td>
+              <td>64</td>
+              <td>2012/04/09</td>
+              <td>$138,575</td>
+            </tr>
+            <tr>
+              <td>Zenaida Frank</td>
+              <td>Software Engineer</td>
+              <td>New York</td>
+              <td>63</td>
+              <td>2010/01/04</td>
+              <td>$125,250</td>
+            </tr>
+            <tr>
+              <td>Zorita Serrano</td>
+              <td>Software Engineer</td>
+              <td>San Francisco</td>
+              <td>56</td>
+              <td>2012/06/01</td>
+              <td>$115,000</td>
+            </tr>
+            <tr>
+              <td>Jennifer Acosta</td>
+              <td>Junior Javascript Developer</td>
+              <td>Edinburgh</td>
+              <td>43</td>
+              <td>2013/02/01</td>
+              <td>$75,650</td>
+            </tr>
+            <tr>
+              <td>Cara Stevens</td>
+              <td>Sales Assistant</td>
+              <td>New York</td>
+              <td>46</td>
+              <td>2011/12/06</td>
+              <td>$145,600</td>
+            </tr>
+            <tr>
+              <td>Hermione Butler</td>
+              <td>Regional Director</td>
+              <td>London</td>
+              <td>47</td>
+              <td>2011/03/21</td>
+              <td>$356,250</td>
+            </tr>
+            <tr>
+              <td>Lael Greer</td>
+              <td>Systems Administrator</td>
+              <td>London</td>
+              <td>21</td>
+              <td>2009/02/27</td>
+              <td>$103,500</td>
+            </tr>
+            <tr>
+              <td>Jonas Alexander</td>
+              <td>Developer</td>
+              <td>San Francisco</td>
+              <td>30</td>
+              <td>2010/07/14</td>
+              <td>$86,500</td>
+            </tr>
+            <tr>
+              <td>Shad Decker</td>
+              <td>Regional Director</td>
+              <td>Edinburgh</td>
+              <td>51</td>
+              <td>2008/11/13</td>
+              <td>$183,000</td>
+            </tr>
+            <tr>
+              <td>Michael Bruce</td>
+              <td>Javascript Developer</td>
+              <td>Singapore</td>
+              <td>29</td>
+              <td>2011/06/27</td>
+              <td>$183,000</td>
+            </tr>
+            <tr>
+              <td>Donna Snider</td>
+              <td>Customer Support</td>
+              <td>New York</td>
+              <td>27</td>
+              <td>2011/01/25</td>
+              <td>$112,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

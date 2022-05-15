@@ -22,5 +22,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::view('/admin', 'admin.dashboard');
-Route::view('/testlogin', 'auth.login_app');
-Route::view('/testregister', 'auth.register_app');
+Route::view('/testlogin', 'auth.loginapp')->name('masuk');
+Route::view('/testregister', 'auth.registerapp')->name('daftar');
