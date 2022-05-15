@@ -21,7 +21,7 @@
         </a>
         <div class="collapse" id="menuLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
-            <a class="nav-link" href="layout-static.html">Daftar Menu</a>
+            <a class="nav-link" href="{{ route('menu') }}">Daftar Menu</a>
             <a class="nav-link" href="layout-sidenav-light.html">Tambah Menu</a>
             <a class="nav-link" href="layout-sidenav-light.html">Tong Sampah Menu</a>
           </nav>
