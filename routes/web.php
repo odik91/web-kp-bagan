@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/testlogin');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
+// Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
+Route::resource('menu', App\Http\Controllers\MenuController::class);
+// Route::get('/tambah-menu', [App\Http\Controllers\MenuController::class, 'create'])->name('tambah-menu');
 
 Route::view('/admin', 'admin.dashboard');
 Route::view('/testlogin', 'auth.loginapp')->name('masuk');

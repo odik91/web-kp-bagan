@@ -3,12 +3,6 @@
     <div class="sb-sidenav-menu">
       <div class="nav">
         <div class="sb-sidenav-menu-heading">Main Menu</div>
-        {{-- <a
-          class="nav-link collapsed @if(isset($title) && ($title == 'Dashboard')) {{ 'active' }} @else {{ '' }} @endif"
-          href="{{ route('home') }}">
-          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-          Dashboard
-        </a> --}}
         <a class="nav-link" href="{{ route('home') }}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
           Beranda
@@ -21,8 +15,8 @@
         </a>
         <div class="collapse" id="menuLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
-            <a class="nav-link" href="{{ route('menu') }}">Daftar Menu</a>
-            <a class="nav-link" href="layout-sidenav-light.html">Tambah Menu</a>
+            <a class="nav-link" href="{{ route('menu.index') }}">Daftar Menu</a>
+            <a class="nav-link" href="{{ route('menu.create') }}">Tambah Menu</a>
             <a class="nav-link" href="layout-sidenav-light.html">Tong Sampah Menu</a>
           </nav>
         </div>
