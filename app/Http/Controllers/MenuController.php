@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Submenu;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -77,7 +78,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $menu = Menu::where('id', $id)->first();
+        $title = 'Edit Menu';
+        return view('admin.menus.edit', compact('menu', 'title'));
     }
 
     /**
@@ -89,7 +92,22 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'menu' => 'required|min:3|unique:menus',
+            'icon' => 'required|min:5',
+        ]);
+
+        $route = $request['route'];
+        if ($route == null) {
+            $route = '';
+        }
+
+        $menu = Menu::find($id);
+        $data = $request->all();
+        $data['route'] = $route;
+        $menu->update($data);
+
+        return redirect()->route('menu.index')->with('message', "Menu $request->menu berhasil diubah");
     }
 
     /**
@@ -100,6 +118,45 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $menu = Menu::find($id);
+        $menuName = $menu['menu'];
+
+        $submenus = Submenu::where('menu_id', $menu['id'])->get();
+
+        foreach ($submenus as $submenu) {
+            Submenu::find($submenu['id'])->forceDelete();
+        }
+
+        $menu->delete();
+        return redirect()->route('menu.index')->with('message', "Menu $menuName berhasil dihapus ke tong sampah");
+    }
+
+    public function trash()
+    {
+        $title = 'Tong Sampah Menu';
+        $menus = Menu::onlyTrashed()->get();
+        return view('admin.menus.trash', compact('title', 'menus'));
+    }
+
+    public function restore($id)
+    {
+        $menu = Menu::onlyTrashed()->where('id', $id)->first();
+        Menu::onlyTrashed()->where('id', $id)->restore();
+        return redirect()->route('menu.trash')->with('message', "Menu $menu->menu berhasil kembalikan");
+    }
+
+    public function delete($id)
+    {
+        $menu = Menu::onlyTrashed()->where('id', $id)->first();
+        $submenus = Submenu::where('menu_id', $menu['id']);
+
+        if ($submenus->count() > 0) {
+            foreach ($submenus as $submenu) {
+                Submenu::onlyTrashed()->where('id', $submenu['id'])->forceDelete();
+            }
+        }
+
+        Menu::onlyTrashed()->where('id', $id)->forceDelete();
+        return redirect()->route('menu.trash')->with('message', "Menu $menu->menu telah dihapus secara permanen");
     }
 }

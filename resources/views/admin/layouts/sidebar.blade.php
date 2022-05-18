@@ -17,7 +17,20 @@
           <nav class="sb-sidenav-menu-nested nav">
             <a class="nav-link" href="{{ route('menu.index') }}">Daftar Menu</a>
             <a class="nav-link" href="{{ route('menu.create') }}">Tambah Menu</a>
-            <a class="nav-link" href="layout-sidenav-light.html">Tong Sampah Menu</a>
+            <a class="nav-link" href="{{ route('menu.trash') }}">Tong Sampah Menu</a>
+          </nav>
+        </div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#submenuLayouts"
+          aria-expanded="false" aria-controls="submenuLayouts">
+          <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+          Item Submenu
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="submenuLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" href="{{ route('submenu.index') }}">Daftar Submenu</a>
+            <a class="nav-link" href="{{ route('submenu.create') }}">Tambah Submenu</a>
+            <a class="nav-link" href="{{ route('submenu.trash') }}">Tong Sampah Submenu</a>
           </nav>
         </div>
         <div class="sb-sidenav-menu-heading">Interface</div>

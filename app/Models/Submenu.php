@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Menu;
 
-class Submenus extends Model
+class Submenu extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 

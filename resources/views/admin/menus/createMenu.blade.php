@@ -30,17 +30,12 @@
               fa fa-tachometer-alt)</small>
           </div>
           <div class="form-group">
-            <label for="routeName">Route path</label>
+            <label for="routeName">Route name</label>
             <input type="text" name="route" class="form-control" id="routeName">
           </div>
           <button type="submit" class="btn btn-primary">Buat</button>
         </form>
       </div>
-    </div>
-    <div style="height: 100vh"></div>
-    <div class="card mb-4">
-      <div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static
-        navigation demo.</div>
     </div>
   </div>
 </main>

@@ -4,7 +4,8 @@
   <div class="container-fluid">
     <h1 class="mt-4">List Menu</h1>
     <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item"><a href="#">Menu</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('menu.index') }}">Menu</a></li>
+      <li class="breadcrumb-item">Tong Sampah Menu</li>
     </ol>
     <div class="card mb-4">
       @if(Session::has('message'))
@@ -44,9 +45,8 @@
                 <td>{{ $menu['icon'] }}</td>
                 <td>{{ $menu['route'] }}</td>
                 <td>
-                  <a href="{{ route('menu.edit', $menu['id']) }}" class="btn btn-warning" title="edit">
-                    <i class="fas fa-edit"></i>
-                  </a>
+                  <a href="{{ route('menu.restore', $menu['id']) }}" class="btn btn-warning" title="Restore"><i
+                      class="fas fa-trash-restore"></i></a>
                   <a href="#" class="btn btn-danger" title="delete" data-toggle="modal"
                     data-target="#ModalCenter{{ $menu['id'] }}"><i class="fas fa-trash"></i></a>
                   <!-- Modal -->
@@ -62,13 +62,12 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          Apakah anda ingin menghapus <b>{{ ucfirst($menu['menu']) }}</b> ?
-                          <br>
-                          <small class="text-mute">Semua item submenu yang berelasi dengan menu ini akan terhapus
-                            permanen</small>
+                          Apakah anda ingin menghapus <b>{{ ucfirst($menu['menu']) }} secara permanen</b> ?
+                          <small class="form-text text-muted">Item yang telah dihapus tidak bisa dikembalikan
+                            lagi</small>
                         </div>
                         <div class="modal-footer">
-                          <form action="{{ route('menu.destroy', $menu['id']) }}" method="POST">
+                          <form action="{{ route('menu.delete', $menu['id']) }}" method="POST">
                             @csrf
                             @method("DELETE")
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

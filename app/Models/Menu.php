@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Submenus;
+use App\Models\Submenu;
 
 class Menu extends Model
 {
@@ -16,6 +16,6 @@ class Menu extends Model
 
     public function getSubMenu()
     {
-        return $this->hasMany(Submenus::class);
+        return $this->hasMany(Submenu::class);
     }
 }

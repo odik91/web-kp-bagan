@@ -20,9 +20,20 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route Menu
 // Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
 Route::resource('menu', App\Http\Controllers\MenuController::class);
-// Route::get('/tambah-menu', [App\Http\Controllers\MenuController::class, 'create'])->name('tambah-menu');
+Route::get('menus/tong-sampah-menu', [App\Http\Controllers\MenuController::class, 'trash'])->name('menu.trash');
+Route::get('menu/{id}/tong-sampah-menu', [App\Http\Controllers\MenuController::class, 'restore'])->name('menu.restore');
+Route::delete('menu/{id}/tong-sampah-menu', [App\Http\Controllers\MenuController::class, 'delete'])->name('menu.delete');
+
+
+// Route Submenu
+Route::resource('submenu', App\Http\Controllers\SubmenuController::class);
+Route::get('submenus/tong-sampah-submenu', [App\Http\Controllers\SubmenuController::class, 'trash'])->name('submenu.trash');
+Route::get('submenu/{id}/tong-sampah-submenu', [App\Http\Controllers\SubmenuController::class, 'restore'])->name('submenu.restore');
+Route::delete('submenu/{id}/tong-sampah-submenu', [App\Http\Controllers\SubmenuController::class, 'delete'])->name('submenu.delete');
 
 Route::view('/admin', 'admin.dashboard');
 Route::view('/testlogin', 'auth.loginapp')->name('masuk');
