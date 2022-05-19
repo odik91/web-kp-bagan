@@ -36,11 +36,16 @@ Route::get('submenu/{id}/tong-sampah-submenu', [App\Http\Controllers\SubmenuCont
 Route::delete('submenu/{id}/tong-sampah-submenu', [App\Http\Controllers\SubmenuController::class, 'delete'])->name('submenu.delete');
 
 // Route Category
-
 Route::resource('category', App\Http\Controllers\CategoriesController::class);
 Route::get('categories/tong-sampah-kategori', [App\Http\Controllers\CategoriesController::class, 'trash'])->name('category.trash');
 Route::get('category/{id}/tong-sampah-kategori', [App\Http\Controllers\CategoriesController::class, 'restore'])->name('category.restore');
 Route::delete('category/{id}/tong-sampah-kategori', [App\Http\Controllers\CategoriesController::class, 'delete'])->name('category.delete');
+
+// Route Subcategory
+Route::resource('subcategory', App\Http\Controllers\SubcategoriesController::class);
+Route::get('subcategories/tong-sampah-subkategori', [App\Http\Controllers\SubcategoriesController::class, 'trash'])->name('subcategory.trash');
+Route::get('subcategory/{id}/tong-sampah-subkategori', [App\Http\Controllers\SubcategoriesController::class, 'restore'])->name('subcategory.restore');
+Route::delete('subcategory/{id}/tong-sampah-subkategori', [App\Http\Controllers\SubcategoriesController::class, 'delete'])->name('subcategory.delete');
 
 Route::view('/admin', 'admin.dashboard');
 Route::view('/testlogin', 'auth.loginapp')->name('masuk');

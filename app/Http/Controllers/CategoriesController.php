@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Support\Str;
 use Image;
 
@@ -143,6 +144,22 @@ class CategoriesController extends Controller
     {
         $data = Category::find($id);
         $category = $data['name'];
+
+        $subcategories = SubCategory::where('category_id', $id)->get();
+        $SubCatsInTrash = SubCategory::onlyTrashed()->where('category_id', $id)->get();
+
+        if ($subcategories->count() > 0) {
+            foreach ($subcategories as $subcategory) {
+                SubCategory::where('id', $subcategory['id'])->forceDelete();
+            }
+        }
+
+        if ($SubCatsInTrash->count() > 0) {
+            foreach ($SubCatsInTrash as $SubCat) {
+                SubCategory::onlyTrashed()->where('id', $SubCat['id'])->forceDelete();
+            }
+        }
+
         $data->delete();
         return redirect()->route('category.index')->with('message', "Kategori $category berhasil dihapus ke tong sampah");
     }
@@ -162,7 +179,25 @@ class CategoriesController extends Controller
 
     public function delete($id)
     {
+        $category = Category::onlyTrashed()->where('id', $id)->first();
+        $subcategories = SubCategory::where('category_id', $id)->get();
+        $SubCatsInTrash = SubCategory::onlyTrashed()->where('category_id', $id)->get();
+
+        if ($subcategories->count() > 0) {
+            foreach ($subcategories as $subcategory) {
+                SubCategory::where('id', $subcategory['id'])->forceDelete();
+            }
+        }
+
+        if ($SubCatsInTrash->count() > 0) {
+            foreach ($SubCatsInTrash as $SubCat) {
+                SubCategory::onlyTrashed()->where('id', $SubCat['id'])->forceDelete();
+            }
+        }
+
+        unlink(public_path("img/" . $category['image']));
         Category::onlyTrashed()->where('id', $id)->forceDelete();
-        return redirect()->route('category.trash')->with('message', "Kategori telah dihapus secara permanen");
+
+        return redirect()->route('category.trash')->with('message', "Kategori $category->name telah dihapus secara permanen");
     }
 }

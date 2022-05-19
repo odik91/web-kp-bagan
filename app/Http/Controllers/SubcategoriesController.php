@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SubCategory;
+use App\Models\Category;
+use Illuminate\Support\Str;
 
 class SubcategoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,10 @@ class SubcategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'List Subkategoi';
+        $subcategories = SubCategory::orderBy('id', 'asc')->get();
+
+        return view('admin.subcategory.index', compact('title', 'subcategories'));
     }
 
     /**
@@ -23,7 +34,9 @@ class SubcategoriesController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Tambah Subkategori';
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('admin.subcategory.create', compact('title', 'categories'));
     }
 
     /**
@@ -34,7 +47,17 @@ class SubcategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'category_id' => 'required',
+            'subname' => 'required|unique:sub_categories'
+        ]);
+
+        $data = $request->all();
+        $data['slug'] = Str::slug($request['subname']);
+
+        SubCategory::create($data);
+
+        return redirect()->route('subcategory.index')->with('message', "Subkategori $request->subname berhasil dibuat");
     }
 
     /**
@@ -56,7 +79,10 @@ class SubcategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        $categories = Category::orderBy('name', 'asc')->get();
+        $title = 'Ubah Subkategori';
+        return view('admin.subcategory.edit', compact('title', 'categories', 'subcategory'));
     }
 
     /**
@@ -68,7 +94,17 @@ class SubcategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'category_id' => 'required',
+            'subname' => 'required|unique:sub_categories'
+        ]);
+
+        $data = $request->all();
+        $subcategory = SubCategory::find($id);
+        $data['slug'] = Str::slug($request['subname']);
+
+        $subcategory->update($data);
+        return redirect()->route('subcategory.index')->with('message', "Subkategori $request->subname berhasil diubah");
     }
 
     /**
@@ -79,6 +115,27 @@ class SubcategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        $subcategory->delete();
+        return redirect()->route('subcategory.index')->with('message', "Subkategori $subcategory->subname berhasil dihapus ke tong sampah");
+    }
+
+    public function trash()
+    {
+        $subcategories = SubCategory::onlyTrashed()->get();
+        $title = 'Tong Sampah Subkategori';
+        return view('admin.subcategory.trash', compact('title', 'subcategories'));
+    }
+
+    public function restore($id)
+    {
+        SubCategory::onlyTrashed()->where('id', $id)->restore();
+        return redirect()->route('subcategory.trash')->with('message', "Subkategori berhasil dikembalikan");
+    }
+
+    public function delete($id)
+    {
+        SubCategory::onlyTrashed()->where('id', $id)->forceDelete();
+        return redirect()->route('subcategory.trash')->with('message', "Subkategori berhasil dihapus");
     }
 }
