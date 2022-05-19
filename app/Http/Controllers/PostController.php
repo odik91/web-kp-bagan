@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Category;
+use App\Models\SubCategory;
 
 class PostController extends Controller
 {
@@ -13,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Posting';
+        $posts = Post::orderBy('created_at', 'desc')->get();
+        return view('admin.posts.index', compact('title', 'posts'));
     }
 
     /**
@@ -23,7 +28,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Buat Posting';
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('admin.posts.create', compact('title', 'categories'));
     }
 
     /**
@@ -78,6 +85,21 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        //
+    }
+
+    public function trash()
+    {
+        //
+    }
+
+    public function restore($id)
+    {
+        //
+    }
+
+    public function delete($id)
     {
         //
     }
