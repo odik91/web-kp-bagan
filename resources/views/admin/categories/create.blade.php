@@ -39,19 +39,6 @@
             </span>
             @enderror
           </div>
-          <div class="form-group">
-            <label>Thumbnail</label>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input @error('image') is-invalid @enderror" name="image"
-                accept="image/*" id="image">
-              <label class="custom-file-label" for="image">Pilih gambar thumbnail</label>
-            </div>
-            @error('image')
-            <span class="error invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-          </div>
           <button type="submit" class="btn btn-primary float-right px-5">Buat</button>
         </form>
       </div>
@@ -60,12 +47,14 @@
 </main>
 @endsection
 
+@push('addon-header')
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+  crossorigin="anonymous" />
+@endpush
+
 @push('addon-script')
-<script type="text/javascript">
-  document.querySelector('.custom-file-input').addEventListener('change', (e) => {
-    let fileName = document.getElementById('image').files[0].name
-    let nextSibling = e.target.nextElementSibling
-    nextSibling.innerHTML = fileName
-  })
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
 </script>
+<script src="{{ asset('template/dist/js/scripts.js') }}"></script>
 @endpush

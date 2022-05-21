@@ -47,6 +47,13 @@ Route::get('subcategories/tong-sampah-subkategori', [App\Http\Controllers\Subcat
 Route::get('subcategory/{id}/tong-sampah-subkategori', [App\Http\Controllers\SubcategoriesController::class, 'restore'])->name('subcategory.restore');
 Route::delete('subcategory/{id}/tong-sampah-subkategori', [App\Http\Controllers\SubcategoriesController::class, 'delete'])->name('subcategory.delete');
 
+// Route Posts
+Route::resource('post', App\Http\Controllers\PostController::class);
+Route::get('posts/tong-sampah-subkategori', [App\Http\Controllers\PostController::class, 'trash'])->name('post.trash');
+Route::get('post/{id}/tong-sampah-subkategori', [App\Http\Controllers\PostController::class, 'restore'])->name('post.restore');
+Route::delete('post/{id}/tong-sampah-subkategori', [App\Http\Controllers\PostController::class, 'delete'])->name('post.delete');
+Route::get('posts/{id}/', [App\Http\Controllers\PostController::class, 'loadSubcategory'])->name('post.loadSubcategory');
+
 Route::view('/admin', 'admin.dashboard');
 Route::view('/testlogin', 'auth.loginapp')->name('masuk');
 Route::view('/testregister', 'auth.registerapp')->name('daftar');

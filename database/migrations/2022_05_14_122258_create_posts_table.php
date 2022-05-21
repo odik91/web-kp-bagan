@@ -25,6 +25,7 @@ class CreatePostsTable extends Migration
             $table->bigInteger('views')->nullable();
             $table->integer('year');
             $table->integer('month');
+            $table->text('list_image');
             $table->softDeletes();
             $table->timestamps();
         });

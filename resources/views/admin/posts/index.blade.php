@@ -4,7 +4,7 @@
   <div class="container-fluid">
     <h1 class="mt-4">{{ $title }}</h1>
     <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item"><a href="#">Post List</a></li>
+      <li class="breadcrumb-item"><a href="{{ route ('post.index') }}">Posting</a></li>
     </ol>
     <div class="card mb-4">
       @if(Session::has('message'))
@@ -16,13 +16,25 @@
       </div>
       @endif
       <div class="card-body">
+        <div class="container-fluid bg-dark mb-2 rounded">
+          <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm text-right">
+              <a class="btn btn-outline-info my-2" href="{{ route('post.create') }}"><i class="fas fa-plus"></i> Buat
+                Posting
+                Baru</a>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>#</th>
                 <th>Title</th>
-                <th>Slug</th>
                 <th>Category</th>
                 <th>Subcategory</th>
                 <th>Viewer</th>
@@ -36,7 +48,6 @@
               <tr>
                 <th>#</th>
                 <th>Title</th>
-                <th>Slug</th>
                 <th>Category</th>
                 <th>Subcategory</th>
                 <th>Viewer</th>
@@ -50,16 +61,23 @@
               @foreach ($posts as $key => $post)
               <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{ ucfirst($post['title']) }}</td>
-                <td>{{ $post['slug'] }}</td>
+                <td>{{ ucwords($post['title']) }}</td>
                 <td>{{ ucfirst($post->getCategory['name']) }}</td>
                 <td>{{ ucfirst($post->getSubcategory['subname']) }}</td>
-                <td>{{ $post['views'] }}</td>
+                <td>
+                  @if ($post['views'] > 0)
+                  {{$post['views']}}
+                  @else
+                  {{ 'Belum ada pengunjung' }}
+                  @endif
+                </td>
                 <td>{!! strip_tags(substr($post['content'], 0, 150)) !!}...</td>
-                <td><img src="{{ asset('post/' . $post['image']) }}" alt="{{$post['image']}}" class="img-thumbnail"
-                    width="150"></td>
+                <td><img src="{{ asset('post-image/' . $post['image']) }}" alt="{{$post['image']}}"
+                    class="img-thumbnail" width="150"></td>
                 <td>{{ ucfirst($post->getUser['name']) }}</td>
                 <td>
+                  <a href="{{ route('post.show', $post['id']) }}" class="btn btn-info mb-1" title="view"><i
+                      class="far fa-eye"></i></a>
                   <a href="{{ route('post.edit', $post['id']) }}" class="btn btn-warning" title="edit">
                     <i class="fas fa-edit"></i>
                   </a>
@@ -102,3 +120,18 @@
   </div>
 </main>
 @endsection
+
+@push('addon-header')
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+  crossorigin="anonymous" />
+@endpush
+
+@push('addon-script')
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+</script>
+<script src="{{ asset('template/dist/js/scripts.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('template/dist/assets/demo/datatables-demo.js') }}"></script>
+@endpush

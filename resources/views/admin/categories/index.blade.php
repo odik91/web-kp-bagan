@@ -24,7 +24,6 @@
                 <th>Nama Kategori</th>
                 <th>Slug</th>
                 <th>Deskripsi</th>
-                <th>Thumbnail</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -34,7 +33,6 @@
                 <th>Nama Kategori</th>
                 <th>Slug</th>
                 <th>Deskripsi</th>
-                <th>Thumbnail</th>
                 <th>Aksi</th>
               </tr>
             </tfoot>
@@ -45,8 +43,6 @@
                 <td>{{ $categoriy['name'] }}</td>
                 <td>{{ $categoriy['slug'] }}</td>
                 <td>{{ $categoriy['description'] }}</td>
-                <td><img class="img-fluid img-thumbnail" src="{{ asset('img/' . $categoriy['image']) }}"
-                    alt="{{ $categoriy['image'] }}"></td>
                 <td>
                   <a href="{{ route('category.edit', $categoriy['id']) }}" class="btn btn-warning" title="edit">
                     <i class="fas fa-edit"></i>
@@ -93,3 +89,18 @@
   </div>
 </main>
 @endsection
+
+@push('addon-header')
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+  crossorigin="anonymous" />
+@endpush
+
+@push('addon-script')
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+</script>
+<script src="{{ asset('template/dist/js/scripts.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('template/dist/assets/demo/datatables-demo.js') }}"></script>
+@endpush

@@ -48,24 +48,10 @@ class CategoriesController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3',
-            'description' => 'required|min:3',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+            'description' => 'required|min:3'
         ]);
 
         $data = $request->all();
-        $imageName = 'default.jpg';
-
-        if ($request->hasFile('image')) {
-            $imageName = time() . $request['image']->hashName();
-            $pathImage = public_path('/img');
-            $smallImage = Image::make($request['image']->path());
-            // 250 mean size in px
-            $smallImage->resize(250, 250, function ($const) {
-                $const->aspectRatio();
-            })->save($pathImage . '/' . $imageName);
-        }
-
-        $data['image'] = $imageName;
         $data['slug'] = Str::slug($request['name']);
         Category::create($data);
 
@@ -108,26 +94,11 @@ class CategoriesController extends Controller
         $this->validate($request, [
             'name' => 'required|min:3',
             'description' => 'required|min:3',
-            'image' => 'mimes:jpeg,png,jpg,gif,svg'
         ]);
 
         $data = $request->all();
         $category = Category::find($id);
-        $imageName = $category['image'];
 
-        if ($request->hasFile('image')) {
-            unlink(public_path("img/" . $category['image']));
-
-            $imageName = time() . $request['image']->hashName();
-            $pathImage = public_path('/img');
-            $smallImage = Image::make($request['image']->path());
-            // 250 mean size in px
-            $smallImage->resize(250, 250, function ($const) {
-                $const->aspectRatio();
-            })->save($pathImage . '/' . $imageName);
-        }
-
-        $data['image'] = $imageName;
         $data['slug'] = Str::slug($request['name']);
         $category->update($data);
 
@@ -195,7 +166,6 @@ class CategoriesController extends Controller
             }
         }
 
-        unlink(public_path("img/" . $category['image']));
         Category::onlyTrashed()->where('id', $id)->forceDelete();
 
         return redirect()->route('category.trash')->with('message', "Kategori $category->name telah dihapus secara permanen");

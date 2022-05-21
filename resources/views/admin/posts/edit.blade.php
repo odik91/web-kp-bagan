@@ -6,7 +6,7 @@
       <h1 class="mt-4">{{ $title }}</h1>
       <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ route('post.index') }}">Posting</a></li>
-        <li class="breadcrumb-item">Buat Posting</li>
+        <li class="breadcrumb-item">{{ $title }}</li>
       </ol>
       <div class="card mb-4">
         @if(Session::has('message'))
@@ -18,12 +18,13 @@
         </div>
         @endif
         <div class="card-body">
-          <form method="POST" action={{ route('post.store') }} enctype="multipart/form-data">
+          <form method="POST" action={{ route('post.update', [$post['id']]) }} enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
             <div class="form-group">
               <label for="postTitle">Judul Posting</label>
               <input type="text" name="title" id="postTitle" class="form-control @error('title') is-invalid @enderror"
-                placeholder="Masukkan Judul Posting" required>
+                placeholder="Masukkan Judul Posting" value="{{ $post['title'] }}" required>
               @error('title')
               <span class="error invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -35,7 +36,9 @@
               <select name="category" id="category" class="form-control @error('category') is-invalid @enderror">
                 <option selected disabled>Pilih Kategori</option>
                 @foreach ($categories as $category)
-                <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                <option value="{{ $category['id'] }}" @if($post['category_id']===$category['id']) {{ 'selected' }}
+                  @endif>{{
+                  $category['name'] }}</option>
                 @endforeach
               </select>
               @error('category')
@@ -49,6 +52,10 @@
               <select name="subcategory" id="subcategory"
                 class="form-control @error('subcategory') is-invalid @enderror">
                 <option selected disabled>Pilih Subkategori</option>
+                @foreach ($subcategories as $subcategory)
+                <option value="{{ $subcategory['id'] }}" @if($post['sub_category_id']===$subcategory['id'])
+                  {{ 'selected' }} @endif>{{ $subcategory['subname'] }}</option>
+                @endforeach
               </select>
               @error('subcategory')
               <span class="error invalid-feedback" role="alert">
@@ -61,14 +68,15 @@
               <div class="custom-file">
                 <input type="file" name="image" class="custom-file-input @error('image') is-invalid @enderror"
                   id="image" accept="image/*">
-                <label class="custom-file-label" for="image">Pilih gambar utama</label>
+                <label class="custom-file-label" for="image">{{ $post['image'] }}</label>
                 @error('image')
                 <span class="error invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
                 @enderror
               </div>
-              <img id="imageOutput" class="d-none" width="250"><br>
+              <img id="imageOutput" class="img-thumbnail" width="250"
+                src="{{asset('post-image/' . $post['image'])}}"><br>
             </div>
             <div class="form-group">
               <label for="summernote">Artikel Posting</label>
@@ -76,7 +84,8 @@
                 <div style="width: 100%">
                   <textarea
                     style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                    class="textarea @error('article') is-invalid @enderror" name="article" id="summernote"></textarea>
+                    class="textarea @error('article') is-invalid @enderror" name="article"
+                    id="summernote">{!! $post['content'] !!}}</textarea>
                 </div>
                 @error('article')
                 <span class="error invalid-feedback" role="alert">
@@ -160,7 +169,16 @@
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
         ['view', ['fullscreen', 'codeview', 'help']]
-      ],
+      ], 
+      callbacks: {
+        onMediaDelete: function(image) {
+          console.log(image[0]);
+        }
+      }
   });
+
+  $('#summernote').blur(function() {
+    console.log('test');
+  })
 </script>
 @endpush
