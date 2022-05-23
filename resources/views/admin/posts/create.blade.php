@@ -150,6 +150,7 @@
     placeholder: 'Write your article here',
       tabsize: 4,
       height: 400,
+      maximumImageFileSize: 1024*1024, // 500 KB
       toolbar: [
         ['style', ['style']],
         ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -161,6 +162,11 @@
         ['height', ['height']],
         ['view', ['fullscreen', 'codeview', 'help']]
       ],
+      callbacks: {
+        onImageUploadError: function(msg){
+          alert("File terlalu besar melebihi 1 MB tidak dapat diupload")
+        },
+      }
   });
 </script>
 @endpush

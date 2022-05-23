@@ -49,10 +49,12 @@ Route::delete('subcategory/{id}/tong-sampah-subkategori', [App\Http\Controllers\
 
 // Route Posts
 Route::resource('post', App\Http\Controllers\PostController::class);
-Route::get('posts/tong-sampah-subkategori', [App\Http\Controllers\PostController::class, 'trash'])->name('post.trash');
-Route::get('post/{id}/tong-sampah-subkategori', [App\Http\Controllers\PostController::class, 'restore'])->name('post.restore');
-Route::delete('post/{id}/tong-sampah-subkategori', [App\Http\Controllers\PostController::class, 'delete'])->name('post.delete');
+Route::get('posts/tong-sampah-posting', [App\Http\Controllers\PostController::class, 'trash'])->name('post.trash');
+Route::post('post/{id}/tong-sampah-posting', [App\Http\Controllers\PostController::class, 'restore'])->name('post.restore');
+Route::delete('post/{id}/tong-sampah-posting', [App\Http\Controllers\PostController::class, 'delete'])->name('post.delete');
 Route::get('posts/{id}/', [App\Http\Controllers\PostController::class, 'loadSubcategory'])->name('post.loadSubcategory');
+Route::post('post-image/{id}', [App\Http\Controllers\PostController::class, 'uploadImage'])->name('post.uploadImage');
+Route::post('delete-image', [App\Http\Controllers\PostController::class, 'deleteImage'])->name('post.deleteImage');
 
 Route::view('/admin', 'admin.dashboard');
 Route::view('/testlogin', 'auth.loginapp')->name('masuk');

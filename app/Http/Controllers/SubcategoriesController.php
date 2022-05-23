@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\Str;
 
 class SubcategoriesController extends Controller
@@ -96,7 +97,7 @@ class SubcategoriesController extends Controller
     {
         $this->validate($request, [
             'category_id' => 'required',
-            'subname' => 'required|unique:sub_categories'
+            'subname' => 'required'
         ]);
 
         $data = $request->all();
@@ -116,6 +117,12 @@ class SubcategoriesController extends Controller
     public function destroy($id)
     {
         $subcategory = SubCategory::find($id);
+        $posts = Post::where('sub_category_id', $id)->get();
+        foreach ($posts as $post) {
+            $insert = Post::find($post['id']);
+            $insert['sub_category_id'] = 0;
+            $insert->update();
+        }
         $subcategory->delete();
         return redirect()->route('subcategory.index')->with('message', "Subkategori $subcategory->subname berhasil dihapus ke tong sampah");
     }

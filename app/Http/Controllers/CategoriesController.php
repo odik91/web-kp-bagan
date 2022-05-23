@@ -116,18 +116,28 @@ class CategoriesController extends Controller
         $data = Category::find($id);
         $category = $data['name'];
 
+        $defaultCatName = 'Uncategorize';
+
         $subcategories = SubCategory::where('category_id', $id)->get();
         $SubCatsInTrash = SubCategory::onlyTrashed()->where('category_id', $id)->get();
 
         if ($subcategories->count() > 0) {
             foreach ($subcategories as $subcategory) {
-                SubCategory::where('id', $subcategory['id'])->forceDelete();
+                $getDefaultCategories = Category::where('name', $defaultCatName)->firstOrFail();
+                $insert = SubCategory::find($subcategory['id']);
+                $insert['category_id'] = $getDefaultCategories['id'];
+                $insert->update();
             }
         }
 
         if ($SubCatsInTrash->count() > 0) {
             foreach ($SubCatsInTrash as $SubCat) {
-                SubCategory::onlyTrashed()->where('id', $SubCat['id'])->forceDelete();
+                SubCategory::onlyTrashed()->where('id', $SubCat['id'])->restore();
+                $getDefaultCategories = Category::where('name', $defaultCatName)->firstOrFail();
+                $insert = SubCategory::find($SubCat['id']);
+                $insert['category_id'] = $getDefaultCategories['id'];
+                $insert->update();
+                $insert->delete();
             }
         }
 

@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\PostImages;
 use Illuminate\Support\Str;
 use Image;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -67,15 +69,14 @@ class PostController extends Controller
             list($e, $data) = explode(',', $data);
             $imageData[$key] = base64_decode($data);
             $imageName[$key] = "/post-image/" . date('timestamp') . time() . $key . $request['image']->hashName() . $imageFiles[$key]->getAttribute('data-filename');
-            // $path = public_path() . $imageName[$key];
-            // file_put_contents($path, $imageData[$key]);
-            // $imageFile->removeAttribute('src');
-            // $imageFile->setAttribute('src', $imageName[$key]);
+            $path = public_path() . $imageName[$key];
+            file_put_contents($path, $imageData[$key]);
+            $imageFile->removeAttribute('src');
+            $imageFile->setAttribute('src', $imageName[$key]);
             array_push($arrImg, substr($imageName[$key], 12));
         }
 
-        dd($arrImg);
-
+        // dd($arrImg);
 
         $content = $dom->saveHTML();
 
@@ -102,6 +103,15 @@ class PostController extends Controller
         $inputData['month'] = date("m");
 
         Post::create($inputData);
+
+        $getCurrentPost = Post::where('title', $request['title'])->first();
+
+        for ($i = 0; $i < count($arrImg); $i++) {
+            $insertImage['post_id'] = $getCurrentPost['id'];
+            $insertImage['image_name'] = $arrImg[$i];
+
+            PostImages::create($insertImage);
+        }
         return redirect()->route('post.index')->with('message', "Posting $request->title berhasil dibuat");
     }
 
@@ -125,7 +135,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        $title = "Edit" . $post['title'];
+        $title = "Edit " . $post['title'];
         $categories = Category::orderBy('name', 'asc')->get();
         $subcategories = SubCategory::where('category_id', $post['category_id'])->get();
         return view('admin.posts.edit', compact('title', 'post', 'categories', 'subcategories'));
@@ -140,7 +150,40 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:3',
+            'category' => 'required|required',
+            'subcategory' => 'required|required',
+            'image' => 'mimes:jpg,jpeg,png',
+            'article' => 'required|min:10'
+        ]);
+
+        $post = Post::find($id);
+        $imageName = $post['image'];
+
+        if ($request->hasFile('image')) {
+            unlink(public_path("post-image/{$post['image']}"));
+            $imageName = time() . $request['image']->hashName();
+            $pathImage = public_path('/post-image');
+            $smallImage = Image::make($request['image']->path());
+            // 250 mean size in px
+            $smallImage->resize(1024, 1024, function ($const) {
+                $const->aspectRatio();
+            })->save($pathImage . '/' . $imageName);
+        }
+
+        $inputData['title'] = ($request['title']);
+        $inputData['slug'] = Str::slug($request['title']);
+        $inputData['category_id'] = $request['category'];
+        $inputData['sub_category_id'] = $request['subcategory'];
+        $inputData['content'] = $request['article'];
+        $inputData['image'] = $imageName;
+        $inputData['author'] = auth()->user()->id;
+        $inputData['year'] = date("Y");
+        $inputData['month'] = date("m");
+
+        $post->update($inputData);
+        return redirect()->route('post.index')->with('message', "Posting {$inputData['title']} berhasil diupdate");
     }
 
     /**
@@ -151,12 +194,88 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('post.index')->with('message', "Posting {$post['title']} berhasil dihapus ke tong sampah");
+    }
+
+    public function trash()
+    {
+        $title = 'Tong Sampah Posting';
+        $posts = Post::onlyTrashed()->get();
+        return view('admin.posts.trash', compact('title', 'posts'));
+    }
+
+    public function restore(Request $request, $id)
+    {
+        $post = Post::onlyTrashed()->where('id', $id)->first();
+        Post::onlyTrashed()->where('id', $id)->restore();
+        return redirect()->route('post.trash')->with('message', "Posting {$post['title']} berhasil dikembalikan");
+    }
+
+    public function delete($id)
+    {
+        $post = Post::onlyTrashed()->where('id', $id)->first();
+
+        if (Storage::exists(public_path("post-image/{$post['image']}"))) {
+            unlink(public_path("post-image/{$post['image']}"));
+        }
+
+        $listImages = PostImages::where('post_id', $id)->get();
+        foreach ($listImages as $listImage) {
+            if (Storage::exists(public_path("post-image/{$listImage['image_name']}"))) {
+                unlink(public_path("post-image/{$listImage['image_name']}"));
+            }
+            PostImages::where('id', $listImage['id'])->forceDelete();
+        }
+
+
+        Post::onlyTrashed()->where('id', $id)->forceDelete();
+        return redirect()->route('post.trash')->with('message', "Posting {$post['title']} berhasil dihapus");
     }
 
     public function loadSubcategory($id)
     {
         $subcategories = SubCategory::where('category_id', $id)->pluck('subname', 'id');
         return response()->json($subcategories);
+    }
+
+    public function uploadImage(Request $request, $id)
+    {
+        $this->validate($request, [
+            'image' => 'mimes:jpeg,jpg,png'
+        ]);
+
+        $imageName = '';
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . $request['image']->hashName();
+            $pathImage = public_path('/post-image');
+            $smallImage = Image::make($request['image']->path());
+            // 250 mean size in px
+            $smallImage->resize(800, 800, function ($const) {
+                $const->aspectRatio();
+            })->save($pathImage . '/' . $imageName);
+        }
+
+        $data['post_id'] = $id;
+        $data['image_name'] = $imageName;
+
+        PostImages::create($data);
+
+        return asset("post-image/{$imageName}");
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $pathLn = strlen(public_path('post-image')) - 33;
+        $file_name = substr($request['src'], $pathLn);
+
+        if (unlink(public_path("post-image/{$file_name}"))) {
+            PostImages::where('image_name', $file_name)->forceDelete();
+            return 'gambar telah dihapus';
+        } else {
+            return 'Telah terjadi kesalahan';
+        }
     }
 }

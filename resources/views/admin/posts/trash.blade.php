@@ -5,6 +5,7 @@
     <h1 class="mt-4">{{ $title }}</h1>
     <ol class="breadcrumb mb-4">
       <li class="breadcrumb-item"><a href="{{ route ('post.index') }}">Posting</a></li>
+      <li class="breadcrumb-item">{{ $title }}</li>
     </ol>
     <div class="card mb-4">
       @if(Session::has('message'))
@@ -21,11 +22,6 @@
             <div class="col-sm">
             </div>
             <div class="col-sm">
-            </div>
-            <div class="col-sm text-right">
-              <a class="btn btn-outline-info my-2" href="{{ route('post.create') }}"><i class="fas fa-plus"></i> Buat
-                Posting
-                Baru</a>
             </div>
           </div>
         </div>
@@ -62,26 +58,8 @@
               <tr>
                 <td>{{ ++$key }}</td>
                 <td>{{ ucwords($post['title']) }}</td>
-                <td>
-                  @php
-                  $category = App\Models\Category::where('id', $post['category_id']);
-                  @endphp
-                  @if (count($category->get()) > 0)
-                  {{ ucfirst($category->first()->name) }}
-                  @else
-                  {{ "Kategori belum diatur" }}
-                  @endif
-                </td>
-                <td>
-                  @php
-                  $subcategory = App\Models\SubCategory::where('id', $post['sub_category_id'])->get();
-                  @endphp
-                  @if (count($subcategory) > 0)
-                  {{ ucfirst(App\Models\SubCategory::where('id', $post['sub_category_id'])->first()->subname) }}
-                  @else
-                  {{ "Subkategori belum diatur" }}
-                  @endif
-                </td>
+                <td>{{ ucfirst($post->getCategory['name']) }}</td>
+                <td>{{ ucfirst($post->getSubcategory['subname']) }}</td>
                 <td>
                   @if ($post['views'] > 0)
                   {{$post['views']}}
@@ -100,11 +78,11 @@
                 </td>
                 <td>{{ ucfirst($post->getUser['name']) }}</td>
                 <td>
-                  <a href="{{ route('post.show', $post['id']) }}" class="btn btn-info mb-1" title="view"><i
-                      class="far fa-eye"></i></a>
-                  <a href="{{ route('post.edit', $post['id']) }}" class="btn btn-warning" title="edit">
-                    <i class="fas fa-edit"></i>
-                  </a>
+                  <form action="{{ route('post.restore', $post['id']) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-warning" title="restore"><i
+                        class="fas fa-trash-restore"></i></button>
+                  </form>
                   <a href="#" class="btn btn-danger" title="delete" data-toggle="modal"
                     data-target="#ModalCenter{{ $post['id'] }}"><i class="fas fa-trash"></i></a>
                   <!-- Modal -->
@@ -120,10 +98,12 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          Apakah anda ingin menghapus <b>{{ ucfirst($post['title']) }}</b> ?
+                          Apakah anda ingin menghapus <b>{{ ucfirst($post['title']) }}</b> ? <br>
+                          <small class="form-text text-muted">Item yang telah dihapus tidak bisa dikembalikan
+                            lagi</small>
                         </div>
                         <div class="modal-footer">
-                          <form action="{{ route('post.destroy', $post['id']) }}" method="POST">
+                          <form action="{{ route('post.delete', $post['id']) }}" method="POST">
                             @csrf
                             @method("DELETE")
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

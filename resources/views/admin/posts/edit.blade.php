@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container">
   <main>
     <div class="container-fluid">
@@ -79,13 +80,14 @@
                 src="{{asset('post-image/' . $post['image'])}}"><br>
             </div>
             <div class="form-group">
-              <label for="summernote">Artikel Posting</label>
+              <label for="article">Artikel Posting</label>
+              <div id="notification"></div>
               <div class="input-group">
                 <div style="width: 100%">
                   <textarea
                     style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                     class="textarea @error('article') is-invalid @enderror" name="article"
-                    id="summernote">{!! $post['content'] !!}}</textarea>
+                    id="article">{!! $post['content'] !!}</textarea>
                 </div>
                 @error('article')
                 <span class="error invalid-feedback" role="alert">
@@ -128,7 +130,7 @@
         dataType: 'json',
         success: (data) => {
           $("#subcategory").empty()
-          $("#subcategory").append("<option value='' selected disabled>Pilih Subkategori</option>");
+          $("#subcategory").append("<option value='' selected disabled>Pilih Subkategori</option>")
           $.each(data, (key, value) => {
             $( "#subcategory" ).append( `<option value="${key}">${value}</option>` )
           })
@@ -136,7 +138,7 @@
       })
     } else {
       $("#subcategory").empty()
-      $("#subcategory").append("<option value='' selected disabled>Pilih Subkategori</option>");
+      $("#subcategory").append("<option value='' selected disabled>Pilih Subkategori</option>")
     }
   })
 
@@ -155,30 +157,77 @@
     nextSibling.innerHTML = fileName
   })
 
-  $('#summernote').summernote({
+  $('.textarea').summernote({
     placeholder: 'Write your article here',
       tabsize: 4,
       height: 400,
+      maximumImageFileSize: 1024*1024, // 1MB
       toolbar: [
         ['style', ['style']],
         ['style', ['bold', 'italic', 'underline', 'clear']],
         ['font', ['strikethrough', 'superscript', 'subscript']],
         ['fontsize', ['fontsize']],
         ['color', ['color']],
-        ['insert', [ 'picture', 'link', 'video', 'table']],
+        ['insert', [ 'ajaximageupload','picture', 'link', 'video', 'table']],
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
         ['view', ['fullscreen', 'codeview', 'help']]
       ], 
       callbacks: {
-        onMediaDelete: function(image) {
-          console.log(image[0]);
+        onImageUpload: function(image) {
+          uploadImage(image[0]);          
+        },
+        onMediaDelete: function(target) {
+          deleteImage(target[0].src)
+        },
+        onImageUploadError: function(msg){
+          alert("File terlalu besar melebihi 1 MB tidak dapat diupload")
         }
-      }
+      },
   });
+  
+  function uploadImage(image) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    var data = new FormData();
+    data.append("image", image);
+    
+    $.ajax({
+      url: "{{ route('post.uploadImage', $post['id']) }}",
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      type: "POST",
+      success: function(url) {
+        $('#article').summernote("insertImage", url);
+      },
+      error: function(data) {
+        console.log(data);
+      }
+    })
+  }
 
-  $('#summernote').blur(function() {
-    console.log('test');
-  })
+  function deleteImage(src) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    $.ajax({
+      data: {src: src},
+      type: "POST",
+      url: "{{ route('post.deleteImage') }}",
+      cache: false,
+      success: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
 </script>
 @endpush
