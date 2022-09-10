@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Kampung Bagan | Admin Area
+                    Kampung Karet | Admin Area
                 </a>
 
                 <div class="navbar-collapse" id="navbarSupportedContent">

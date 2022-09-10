@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/testlogin');
+    return redirect()->route('login');
 });
 
 Auth::routes();
@@ -57,5 +57,5 @@ Route::post('post-image/{id}', [App\Http\Controllers\PostController::class, 'upl
 Route::post('delete-image', [App\Http\Controllers\PostController::class, 'deleteImage'])->name('post.deleteImage');
 
 Route::view('/admin', 'admin.dashboard');
-Route::view('/testlogin', 'auth.loginapp')->name('masuk');
-Route::view('/testregister', 'auth.registerapp')->name('daftar');
+// Route::view('/login', 'auth.login')->name('masuk');
+// Route::view('/register', 'auth.register')->name('daftar');

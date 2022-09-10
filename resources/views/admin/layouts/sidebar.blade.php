@@ -7,8 +7,8 @@
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
           Beranda
         </a>
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuLayouts" aria-expanded="false"
-          aria-controls="menuLayouts">
+        {{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuLayouts"
+          aria-expanded="false" aria-controls="menuLayouts">
           <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
           Item Menu
           <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -32,7 +32,7 @@
             <a class="nav-link" href="{{ route('submenu.create') }}">Tambah Submenu</a>
             <a class="nav-link" href="{{ route('submenu.trash') }}">Tong Sampah Submenu</a>
           </nav>
-        </div>
+        </div> --}}
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryLayouts"
           aria-expanded="false" aria-controls="categoryLayouts">
           <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

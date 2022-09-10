@@ -123,6 +123,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         $menu = Menu::find($id);
         $menuName = $menu['menu'];
 
