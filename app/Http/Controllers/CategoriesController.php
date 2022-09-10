@@ -51,8 +51,21 @@ class CategoriesController extends Controller
             'description' => 'required|min:3'
         ]);
 
+        $imageName = '';
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . $request['image']->hashName();
+            $pathImage = public_path('/post-image');
+            $smallImage = Image::make($request['image']->path());
+            // 250 mean size in px
+            $smallImage->resize(512, 512, function ($const) {
+                $const->aspectRatio();
+            })->save($pathImage . '/' . $imageName);
+        }
+
         $data = $request->all();
         $data['slug'] = Str::slug($request['name']);
+        $data['image'] = $imageName;
         Category::create($data);
 
         return redirect()->route('category.index')->with('message', "Kategori $request->name berhasil dibuat");
@@ -96,10 +109,26 @@ class CategoriesController extends Controller
             'description' => 'required|min:3',
         ]);
 
+
         $data = $request->all();
         $category = Category::find($id);
+        $image = $category['image'];
+
+        if ($request->hasFile('image')) {
+            if ($image != null) {
+                unlink(public_path("post-image/" . $image));
+            }
+            $image = time() . $request['image']->hashName();
+            $pathImage = public_path('/post-image');
+            $smallImage = Image::make($request['image']->path());
+            // 250 mean size in px
+            $smallImage->resize(512, 512, function ($const) {
+                $const->aspectRatio();
+            })->save($pathImage . '/' . $image);
+        }
 
         $data['slug'] = Str::slug($request['name']);
+        $data['image'] = $image;
         $category->update($data);
 
         return redirect()->route('category.index')->with('message', "Kategori $request->name berhasil diupdate");
@@ -161,6 +190,7 @@ class CategoriesController extends Controller
     public function delete($id)
     {
         $category = Category::onlyTrashed()->where('id', $id)->first();
+        $image = $category['image'];
         $subcategories = SubCategory::where('category_id', $id)->get();
         $SubCatsInTrash = SubCategory::onlyTrashed()->where('category_id', $id)->get();
 
@@ -176,6 +206,9 @@ class CategoriesController extends Controller
             }
         }
 
+        if ($image != null) {
+            unlink(public_path("post-image/" . $image));
+        }
         Category::onlyTrashed()->where('id', $id)->forceDelete();
 
         return redirect()->route('category.trash')->with('message', "Kategori $category->name telah dihapus secara permanen");

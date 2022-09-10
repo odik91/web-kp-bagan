@@ -162,7 +162,9 @@ class PostController extends Controller
         $imageName = $post['image'];
 
         if ($request->hasFile('image')) {
-            unlink(public_path("post-image/{$post['image']}"));
+            if ($imageName != null) {
+                unlink(public_path("post-image/{$post['image']}"));
+            }
             $imageName = time() . $request['image']->hashName();
             $pathImage = public_path('/post-image');
             $smallImage = Image::make($request['image']->path());

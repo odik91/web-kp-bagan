@@ -59,3 +59,11 @@ Route::post('delete-image', [App\Http\Controllers\PostController::class, 'delete
 Route::view('/admin', 'admin.dashboard');
 // Route::view('/login', 'auth.login')->name('masuk');
 // Route::view('/register', 'auth.register')->name('daftar');
+
+
+// route for development only -> clear cache
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});

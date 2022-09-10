@@ -16,6 +16,8 @@
       </div>
       @endif
       <div class="card-body">
+        <a href="{{ route('category.create') }}" class="btn btn-info mb-2"><i class="fas fa-plus mr-2"></i>Tambah
+          Kategori</a>
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
@@ -24,6 +26,7 @@
                 <th>Nama Kategori</th>
                 <th>Slug</th>
                 <th>Deskripsi</th>
+                <th>Icon</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -43,6 +46,11 @@
                 <td>{{ $categoriy['name'] }}</td>
                 <td>{{ $categoriy['slug'] }}</td>
                 <td>{{ $categoriy['description'] }}</td>
+                @php
+                $image = null;
+                isset($categoriy['image']) ? $image = $categoriy['image'] : $image = 'logo.png';
+                @endphp
+                <td><img src="{{ asset('post-image/' . $image) }}" alt="" width="50"></td>
                 <td>
                   <a href="{{ route('category.edit', $categoriy['id']) }}" class="btn btn-warning" title="edit">
                     <i class="fas fa-edit"></i>

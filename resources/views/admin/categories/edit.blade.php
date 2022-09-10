@@ -40,6 +40,24 @@
             </span>
             @enderror
           </div>
+          <div class="form-group">
+            <label for="image">Gambar Kategori</label>
+            <div class="custom-file">
+              <input type="file" name="image" class="custom-file-input @error('image') is-invalid @enderror" id="image"
+                accept="image/*">
+              <label class="custom-file-label" for="image">{{ isset($category['image']) ? $category['image'] : 'Belum
+                menggunakan gambar. Silkan pilih gambar!' }}</label>
+              @error('image')
+              <span class="error invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+            <br>
+            <img id="imageOutput"
+              src="{{isset($category['image']) ? asset('post-image/' . $category['image']) : asset('post-image/logo.png')}}"
+              class="mt-2" width="150"><br>
+          </div>
           <button type="submit" class="btn btn-primary float-right px-5">Ubah</button>
         </form>
       </div>
@@ -58,4 +76,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
 </script>
 <script src="{{ asset('template/dist/js/scripts.js') }}"></script>
+<script>
+  document.querySelector('#image').addEventListener('change', (e) => {
+    let output = document.getElementById('imageOutput')
+    output.className = 'img-thumbnail mb-2'
+    output.src = URL.createObjectURL(e.target.files[0])
+    output.onload = () => {
+      URL.revokeObjectURL(output.src)
+    }
+    document.querySelector('.custom-file-label').innerHTML = e.target.files[0].name
+  })
+</script>
 @endpush

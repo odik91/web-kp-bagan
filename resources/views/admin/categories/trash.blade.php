@@ -25,6 +25,7 @@
                 <th>Nama Kategori</th>
                 <th>Slug</th>
                 <th>Deskripsi</th>
+                <th>Icon</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -34,6 +35,7 @@
                 <th>Nama Kategori</th>
                 <th>Slug</th>
                 <th>Deskripsi</th>
+                <th>Ikon</th>
                 <th>Aksi</th>
               </tr>
             </tfoot>
@@ -44,6 +46,13 @@
                 <td>{{ $categoriy['name'] }}</td>
                 <td>{{ $categoriy['slug'] }}</td>
                 <td>{{ $categoriy['description'] }}</td>
+                <td>
+                  @php
+                  $image = null;
+                  isset($categoriy['image']) ? $image = $categoriy['image'] : $image = 'logo.png';
+                  @endphp
+                  <img src="{{ asset('post-image/' . $image ) }}" alt="" width="50">
+                </td>
                 <td>
                   <a href="{{ route('category.restore', $categoriy['id']) }}" class="btn btn-warning" title="restore">
                     <i class="fas fa-trash-restore"></i>
