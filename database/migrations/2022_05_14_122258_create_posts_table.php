@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->integer('category_id');
             $table->integer('sub_category_id');
-            $table->text('content');
+            $table->longText('content');
             $table->string('image');
             $table->integer('author');
             $table->bigInteger('views')->nullable();

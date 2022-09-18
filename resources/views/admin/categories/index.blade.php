@@ -30,15 +30,6 @@
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tfoot>
-              <tr>
-                <th>No</th>
-                <th>Nama Kategori</th>
-                <th>Slug</th>
-                <th>Deskripsi</th>
-                <th>Aksi</th>
-              </tr>
-            </tfoot>
             <tbody>
               @foreach ($categories as $key => $categoriy)
               <tr>
@@ -50,7 +41,9 @@
                 $image = null;
                 isset($categoriy['image']) ? $image = $categoriy['image'] : $image = 'logo.png';
                 @endphp
-                <td><img src="{{ asset('post-image/' . $image) }}" alt="" width="50"></td>
+                <td>
+                  <img src="{{ asset('post-image/' . $image) }}" alt="" width="50">
+                </td>
                 <td>
                   <a href="{{ route('category.edit', $categoriy['id']) }}" class="btn btn-warning" title="edit">
                     <i class="fas fa-edit"></i>

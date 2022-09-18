@@ -96,7 +96,7 @@
                 @enderror
               </div>
             </div>
-            <button type="submit" class="btn btn-primary float-right px-5">Posting Artikel</button>
+            <button type="submit" class="btn btn-primary float-right px-5">Edit Artikel</button>
           </form>
         </div>
       </div>
@@ -157,33 +157,27 @@
     nextSibling.innerHTML = fileName
   })
 
-  $('.textarea').summernote({
+  $('#article').summernote({
     placeholder: 'Write your article here',
       tabsize: 4,
       height: 400,
-      maximumImageFileSize: 1024*1024, // 1MB
+      maximumImageFileSize: 1024*1024, // 500 KB
       toolbar: [
         ['style', ['style']],
         ['style', ['bold', 'italic', 'underline', 'clear']],
         ['font', ['strikethrough', 'superscript', 'subscript']],
         ['fontsize', ['fontsize']],
         ['color', ['color']],
-        ['insert', [ 'ajaximageupload','picture', 'link', 'video', 'table']],
+        ['insert', [ 'picture', 'link', 'video', 'table']],
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
         ['view', ['fullscreen', 'codeview', 'help']]
-      ], 
+      ],
       callbacks: {
-        onImageUpload: function(image) {
-          uploadImage(image[0]);          
-        },
-        onMediaDelete: function(target) {
-          deleteImage(target[0].src)
-        },
         onImageUploadError: function(msg){
           alert("File terlalu besar melebihi 1 MB tidak dapat diupload")
-        }
-      },
+        },
+      }
   });
   
   function uploadImage(image) {

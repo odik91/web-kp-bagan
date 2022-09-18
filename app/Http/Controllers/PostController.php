@@ -68,7 +68,8 @@ class PostController extends Controller
             list($type, $data) = explode(';', $data);
             list($e, $data) = explode(',', $data);
             $imageData[$key] = base64_decode($data);
-            $imageName[$key] = "/post-image/" . date('timestamp') . time() . $key . $request['image']->hashName() . $imageFiles[$key]->getAttribute('data-filename');
+            $uniqueName = date_timestamp_get(date_create());
+            $imageName[$key] = "/post-image/" . date('timestamp') . time() . $key . $uniqueName . $imageFiles[$key]->getAttribute('data-filename');
             $path = public_path() . $imageName[$key];
             file_put_contents($path, $imageData[$key]);
             $imageFile->removeAttribute('src');
@@ -159,10 +160,66 @@ class PostController extends Controller
         ]);
 
         $post = Post::find($id);
+        $oldContent = $post['content'];
+
+        $domOldArticle = new \DOMDocument();
+        $domOldArticle->loadHTML($oldContent, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | libxml_use_internal_errors(true));
+        $findImages = $domOldArticle->getElementsByTagName('img');
+        $oldImages = [];
+
+        foreach ($findImages as $key => $findImage) {
+            $data = $findImage->getAttribute('src');
+            $data = explode('/', $data);
+            array_push($oldImages, $data[2]);
+        }
+
+        $content = $request['article'];
+        libxml_use_internal_errors(true);
+        $dom = new \DOMDocument();
+        $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | libxml_use_internal_errors(true));
+        $imageFiles = $dom->getElementsByTagName('img');
+        $arrImg = [];
+
+        foreach ($imageFiles as $key => $imageFile) {
+            $data = $imageFile->getAttribute('src');
+            if (strpos($data, ';') === false) {
+                continue;
+            }
+            list($type, $data) = explode(';', $data);
+            list($e, $data) = explode(',', $data);
+            $imageData[$key] = base64_decode($data);
+            $uniqueName = date_timestamp_get(date_create());
+            $imageName[$key] = "/post-image/" . date('timestamp') . time() . $key . $uniqueName . $imageFiles[$key]->getAttribute('data-filename');
+            $path = public_path() . $imageName[$key];
+            file_put_contents($path, $imageData[$key]);
+            $imageFile->removeAttribute('src');
+            $imageFile->setAttribute('src', $imageName[$key]);
+            array_push($arrImg, substr($imageName[$key], 12));
+        }
+
+        $arrayRemoveimage = array_diff($arrImg, $oldImages);
+        if (sizeof($arrayRemoveimage) > 0) {
+            for ($i = 0; $i > sizeof($arrayRemoveimage); $i++) {
+                unlink(public_path("post-image/{$arrayRemoveimage[$i]}"));
+            }
+        }
+
+        $imageName = '';
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . $request['image']->hashName();
+            $pathImage = public_path('/post-image');
+            $smallImage = Image::make($request['image']->path());
+            // 250 mean size in px
+            $smallImage->resize(1024, 1024, function ($const) {
+                $const->aspectRatio();
+            })->save($pathImage . '/' . $imageName);
+        }
+
         $imageName = $post['image'];
 
         if ($request->hasFile('image')) {
-            if ($imageName != null) {
+            if ($imageName != null || $imageName != 'univ-batam.jpg') {
                 unlink(public_path("post-image/{$post['image']}"));
             }
             $imageName = time() . $request['image']->hashName();

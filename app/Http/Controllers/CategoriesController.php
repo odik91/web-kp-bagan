@@ -116,7 +116,9 @@ class CategoriesController extends Controller
 
         if ($request->hasFile('image')) {
             if ($image != null) {
-                unlink(public_path("post-image/" . $image));
+                if (file_exists("post-image/" . $image)) {
+                    unlink(public_path("post-image/" . $image));
+                }
             }
             $image = time() . $request['image']->hashName();
             $pathImage = public_path('/post-image');
