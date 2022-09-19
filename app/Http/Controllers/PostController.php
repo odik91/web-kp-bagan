@@ -59,12 +59,15 @@ class PostController extends Controller
 
         $content = $request['article'];
         $dom = new \DOMDocument();
-        $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | libxml_use_internal_errors(true));
         $imageFiles = $dom->getElementsByTagName('img');
         $arrImg = [];
 
         foreach ($imageFiles as $key => $imageFile) {
             $data = $imageFile->getAttribute('src');
+            if (strpos($data, ';') === false) {
+                continue;
+            }
             list($type, $data) = explode(';', $data);
             list($e, $data) = explode(',', $data);
             $imageData[$key] = base64_decode($data);
@@ -197,6 +200,8 @@ class PostController extends Controller
             array_push($arrImg, substr($imageName[$key], 12));
         }
 
+        $content = $dom->saveHTML();
+
         $arrayRemoveimage = array_diff($arrImg, $oldImages);
         if (sizeof($arrayRemoveimage) > 0) {
             for ($i = 0; $i > sizeof($arrayRemoveimage); $i++) {
@@ -235,7 +240,7 @@ class PostController extends Controller
         $inputData['slug'] = Str::slug($request['title']);
         $inputData['category_id'] = $request['category'];
         $inputData['sub_category_id'] = $request['subcategory'];
-        $inputData['content'] = $request['article'];
+        $inputData['content'] = $content;
         $inputData['image'] = $imageName;
         $inputData['author'] = auth()->user()->id;
         $inputData['year'] = date("Y");
@@ -278,6 +283,20 @@ class PostController extends Controller
 
         if (Storage::exists(public_path("post-image/{$post['image']}"))) {
             unlink(public_path("post-image/{$post['image']}"));
+        }
+
+        $domOldArticle = new \DOMDocument();
+        $domOldArticle->loadHTML($post['content'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | libxml_use_internal_errors(true));
+        $findImages = $domOldArticle->getElementsByTagName('img');
+        $oldImages = [];
+
+        foreach ($findImages as $key => $findImage) {
+            $data = $findImage->getAttribute('src');
+            $data = explode('/', $data);
+
+            if (file_exists("post-image/" . $data[2])) {
+                unlink(public_path("post-image/" . $data[2]));
+            }
         }
 
         $listImages = PostImages::where('post_id', $id)->get();

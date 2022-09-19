@@ -23,7 +23,8 @@
             <div class="col-sm">
             </div>
             <div class="col-sm text-right">
-              <a class="btn btn-outline-info my-2" href="{{ route('post.create') }}"><i class="fas fa-plus"></i> Buat
+              <a class="btn btn-outline-info btn-light my-2" href="{{ route('post.create') }}"><i
+                  class="fas fa-plus"></i> Buat
                 Posting
                 Baru</a>
             </div>
